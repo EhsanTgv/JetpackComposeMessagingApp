@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jetpackcomposemessagingapp.models.Message
 import com.example.jetpackcomposemessagingapp.ui.theme.JetpackComposeMessagingAppTheme
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             JetpackComposeMessagingAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    messageListTopBar("Android")
+                    MessagesListScreenView("Messages", {}, {})
                 }
             }
         }
@@ -37,7 +38,30 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-fun messageListTopBar(title: String) {
+fun MessagesListScreenView(
+    title: String,
+    fabClick: () -> Unit,
+    itemClick: (message: Message) -> Unit
+) {
+    Scaffold(
+        topBar = { MessageListTopBar(title = title) },
+        floatingActionButton = { FloatingButton(fabClick = fabClick) }) {
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    JetpackComposeMessagingAppTheme {
+        // A surface container using the 'background' color from the theme
+        Surface(color = MaterialTheme.colors.background) {
+            MessagesListScreenView("Messages", {}, {})
+        }
+    }
+}
+
+@Composable
+fun MessageListTopBar(title: String) {
     TopAppBar(
         title = {
             Text(
@@ -67,19 +91,9 @@ fun messageListTopBar(title: String) {
 }
 
 @Composable
-fun floatingButton(fabClick: () -> Unit) {
+fun FloatingButton(fabClick: () -> Unit) {
     FloatingActionButton(onClick = { fabClick() }) {
         Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = "")
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    JetpackComposeMessagingAppTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(color = MaterialTheme.colors.background) {
-            messageListTopBar("Android")
-        }
-    }
-}
