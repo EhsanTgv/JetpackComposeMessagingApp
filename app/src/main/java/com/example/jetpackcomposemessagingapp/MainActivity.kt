@@ -52,7 +52,7 @@ fun messageListTopBar(title: String) {
         },
         actions = {
             Image(
-                painter = painterResource(id =  R.drawable.ic_search),
+                painter = painterResource(id = R.drawable.ic_search),
                 contentDescription = "",
                 modifier = Modifier.padding(start = 10.dp, end = 8.dp)
             )
@@ -67,8 +67,10 @@ fun messageListTopBar(title: String) {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun floatingButton(fabClick: () -> Unit) {
+    FloatingActionButton(onClick = { fabClick() }) {
+        Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = "")
+    }
 }
 
 @Preview(showBackground = true)
