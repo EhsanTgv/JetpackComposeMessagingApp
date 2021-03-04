@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 fun DefaultPreview() {
     JetpackComposeMessagingAppTheme {
         // A surface container using the 'background' color from the theme
-        SenderIcon()
+        MessageView()
     }
 }
 
@@ -99,6 +100,18 @@ fun FloatingButton(fabClick: () -> Unit) {
 }
 
 @Composable
+fun MessageView() {
+    Row(modifier = Modifier.padding(16.dp)) {
+        SenderIcon()
+        Column(modifier = Modifier.padding(start = 8.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Sender(sender = "")
+            }
+        }
+    }
+}
+
+@Composable
 fun SenderIcon() {
     Box(
         modifier = Modifier
@@ -106,7 +119,12 @@ fun SenderIcon() {
             .size(30.dp)
             .background(Color.DarkGray)
     ) {
-        Icon(painter = painterResource(id = R.drawable.ic_person), contentDescription = "")
+        Icon(
+            painter = painterResource(id = R.drawable.ic_person),
+            contentDescription = "",
+            tint = Color.LightGray,
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }
 
