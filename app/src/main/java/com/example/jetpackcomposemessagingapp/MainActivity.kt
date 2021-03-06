@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
 fun DefaultPreview() {
     JetpackComposeMessagingAppTheme {
         // A surface container using the 'background' color from the theme
-        MessageView()
     }
 }
 
@@ -100,13 +99,18 @@ fun FloatingButton(fabClick: () -> Unit) {
 }
 
 @Composable
-fun MessageView() {
+fun MessageView(
+    message: Message,
+    itemClick: (message: Message) -> Unit
+) {
     Row(modifier = Modifier.padding(16.dp)) {
         SenderIcon()
-        Column(modifier = Modifier.padding(start = 8.dp)) {
+        Column(modifier = Modifier.padding(start = 8.dp, top = 0.dp, end = 0.dp, bottom = 0.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Sender(sender = "")
+                Sender(sender = message.sender, modifier = Modifier.weight(1f))
+                MessageTime(time = message.time)
             }
+            ShortMessage(shortMessage = message.message)
         }
     }
 }
@@ -136,6 +140,32 @@ fun Sender(sender: String, modifier: Modifier = Modifier) {
         modifier = modifier,
         overflow = TextOverflow.Ellipsis,
         maxLines = 1
+    )
+}
+
+@Composable
+fun MessageTime(time: String) {
+    Text(
+        text = time,
+        style = TextStyle(
+            color = Color.Gray,
+            fontSize = 12.sp
+        ),
+        maxLines = 1
+    )
+}
+
+@Composable
+fun ShortMessage(shortMessage: String, modifier: Modifier = Modifier) {
+    Text(
+        text = shortMessage,
+        style = TextStyle(
+            color = Color.DarkGray,
+            fontSize = 14.sp
+        ),
+        modifier = modifier,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
     )
 }
 
