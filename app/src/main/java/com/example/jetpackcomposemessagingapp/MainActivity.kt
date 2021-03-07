@@ -1,6 +1,7 @@
 package com.example.jetpackcomposemessagingapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
@@ -31,12 +32,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            JetpackComposeMessagingAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    MessagesListScreenView("Messages", {}, {})
-                }
-            }
+            val list = generateMessageList()
+            MessagesListScreenView(
+                title = "Messages",
+                list = list,
+                fabClick = {fabclicks()},
+                itemClick = {message: Message -> messageClik(message = message) }
+            )
         }
     }
 }
@@ -47,5 +49,30 @@ fun DefaultPreview() {
     JetpackComposeMessagingAppTheme {
         // A surface container using the 'background' color from the theme
     }
+}
+
+fun fabclicks(){
+    Log.v("sample_ksdjds", "fabclicks ")
+}
+
+fun messageClik(message: Message){
+    Log.v("sample_ksdjds", "messageClik - ${message.sender} ")
+//    startActivity(
+//        Intent(
+//            this@MainActivity,
+//            UserListActivity::class.java
+//        )
+//    )
+
+}
+
+fun generateMessageList(): MutableList<Message> {
+    return (0..100).map {
+        Message(
+            sender = "Test sender $it",
+            time = "10:00 AM",
+            message = "Message body text Message body text Message body text Message body text Message body text "
+        )
+    }.toMutableList()
 }
 

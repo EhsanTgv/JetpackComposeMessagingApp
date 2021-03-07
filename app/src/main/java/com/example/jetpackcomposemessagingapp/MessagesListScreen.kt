@@ -19,12 +19,14 @@ import com.example.jetpackcomposemessagingapp.models.Message
 @Composable
 fun MessagesListScreenView(
     title: String,
+    list : MutableList<Message>,
     fabClick: () -> Unit,
     itemClick: (message: Message) -> Unit
 ) {
     Scaffold(
         topBar = { MessageListTopBar(title = title) },
         floatingActionButton = { FloatingButton(fabClick = fabClick) }) {
+        MessagesList(list = list,itemClick = itemClick)
     }
 }
 
@@ -66,10 +68,10 @@ fun MessageListTopBar(title: String) {
     )
 }
 
-//@Preview
-//@Composable
-//fun messagesListScreenPreview(){
-//    val list = generateMessageList()
-//    MessagesListScreenView(title = "Messages",list = list,fabClick = {fabclicks()},
-//        itemClick = { message: Message -> messageClik(message = message) })
-//}
+@Preview
+@Composable
+fun messagesListScreenPreview(){
+    val list = generateMessageList()
+    MessagesListScreenView(title = "Messages",list = list,fabClick = {fabclicks()},
+        itemClick = { message: Message -> messageClik(message = message) })
+}
